@@ -1,0 +1,21 @@
+{
+  "name": "chat-to-video",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "base64-stream": "^1.0.0",
+    "concat-stream": "^2.0.0",
+    "elevenlabs": "^0.13.0",
+    "next": "14.2.5",
+    "openai": "^4.53.2",
+    "react": "^18",
+    "react-dom": "^18",
+    "uuid": "^10.0.0"
+  }
+}
