@@ -6,6 +6,8 @@ import { useState } from "react"
 
 export default function Home() {
   const [videoUrl, setVideoUrl] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState(null)
 
   const getVideo = async (formData) => {
     const response = await fetch("/api", {
@@ -14,6 +16,8 @@ export default function Home() {
     })
 
     if (response.status !== 200) {
+      setError(response.status)
+      setIsLoading(false)
       throw new Error(`prediction failed: ${response.status}`)
     }
 
@@ -26,12 +30,16 @@ export default function Home() {
   const onSubmit = async (event) => {
     event.preventDefault()
 
+    setIsLoading(true)
+    setVideoUrl(null)
+
     const formData = new FormData(event.target)
     const data = await getVideo(formData)
 
     console.log("final video data", data)
     const { videoUrl } = data
 
+    setIsLoading(false)
     setVideoUrl(videoUrl)
   }
 
@@ -54,9 +62,12 @@ export default function Home() {
             <input type="text" name="description" />
             <br />
             <br />
-            <button type="submit">Submit</button>
+
+            {!isLoading && <button type="submit">Submit</button>}
           </form>
 
+          {isLoading && <div className={styles.loader}></div>}
+          {error && <div className={styles.error}>error</div>}
           {videoUrl && (
             <video className={styles.video} width="1024" controls>
               <source src={videoUrl} type="video/mp4" />
