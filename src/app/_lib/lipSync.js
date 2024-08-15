@@ -1,4 +1,4 @@
-export const makeLipSync = async (audio) => {
+export const makeLipSync = async (audio, video) => {
   const options = {
     method: "POST",
     headers: {
@@ -9,16 +9,13 @@ export const makeLipSync = async (audio) => {
 
   const body = {
     audioUrl: audio,
-    // audioUrl:
-    //   "https://synchlabs-public.s3.us-west-2.amazonaws.com/david_demo_shortaud-27623a4f-edab-4c6a-8383-871b18961a4a.wav",
-    videoUrl:
-      "https://synchlabs-public.s3.us-west-2.amazonaws.com/david_demo_shortvid-03a10044-7741-4cfc-816a-5bccd392d1ee.mp4",
+    videoUrl: video,
     maxCredits: 123,
     model: "sync-1.6.0",
     synergize: true,
     pads: [0, 5, 0, 0],
-    synergizerStrength: 1,
-    webhookUrl: "<string>"
+    synergizerStrength: 1
+    // webhookUrl: "<string>"
   }
 
   options.body = JSON.stringify(body)

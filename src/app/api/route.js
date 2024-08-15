@@ -1,12 +1,14 @@
+import { base64toBuffer, sleep } from "../_lib/helpers"
 import {
   createAudioBase64FromText,
   createAudioFileFromText
 } from "../_lib/textToSpeech"
 import { getLipSync, makeLipSync } from "../_lib/lipSync"
 
+import { Blob } from "buffer"
 import { ElevenLabsClient } from "elevenlabs"
 import OpenAI from "openai"
-import { sleep } from "../_lib/helpers"
+import { put } from "@vercel/blob"
 
 const client = new OpenAI({
   apiKey: process.env["OPENAI_API_KEY"] // This is the default and can be omitted
@@ -18,10 +20,18 @@ const elevenlabs = new ElevenLabsClient({
 
 export async function POST(request) {
   console.log("post request")
+  const formData = await request.formData()
+  const name = formData.get("name")
+  const description = formData.get("description")
 
   // chatgpt
   const chatCompletion = await client.chat.completions.create({
-    messages: [{ role: "user", content: "Say this is a test" }],
+    messages: [
+      {
+        role: "user",
+        content: `Respond with a short funny limerick about ${name}. This is a description of them: ${description}`
+      }
+    ],
     model: "gpt-4-turbo"
   })
   console.log("chatCompletion", chatCompletion)
@@ -38,12 +48,22 @@ export async function POST(request) {
 
   const audioBase64 = await createAudioBase64FromText(text)
   console.log("audioBase64", audioBase64)
+  //   console.log(audio)
 
+  const audioBlob = new Blob([base64toBuffer(audioBase64)])
+
+  const { url } = await put("test.mp3", audioBlob, {
+    access: "public"
+  })
   //synclabs
+  console.log(url)
 
-  const string64 = `data:audio/mpeg;base64,${audioBase64}`
+  //   const string64 = `data:audio/mpeg;base64,${audioBase64}`
 
-  const videoRespone = await makeLipSync(string64)
+  const videoRespone = await makeLipSync(
+    url,
+    "https://lk8gussgku7l2lhf.public.blob.vercel-storage.com/dimiShort.mp4"
+  )
   console.log("videoRespone", videoRespone)
 
   const lipSyncId = videoRespone.id
@@ -59,5 +79,5 @@ export async function POST(request) {
 
   //   console.log("video made!", videoUrl)
 
-  return Response.json(JSON.stringify(chatCompletion))
+  return Response.json(JSON.stringify({ videoUrl }))
 }

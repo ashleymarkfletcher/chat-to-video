@@ -36,3 +36,7 @@ export const streamToBase64 = (stream) => {
       })
   })
 }
+
+export const base64toBuffer = (base64Data) => {
+  return Buffer.from(base64Data, "base64")
+}

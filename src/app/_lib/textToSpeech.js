@@ -33,7 +33,7 @@ export const createAudioBase64FromText = async (text) => {
   return new Promise(async (resolve, reject) => {
     try {
       const audio = await client.generate({
-        voice: "Rachel",
+        voice: "8sAltesTVLtsL1sJChRJ",
         model_id: "eleven_turbo_v2_5",
         text
       })
