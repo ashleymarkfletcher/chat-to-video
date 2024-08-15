@@ -79,12 +79,25 @@ export async function POST(request) {
   const lipSyncId = videoRespone.id
   let videoUrl = null
 
+  let timeProcessing = 0
+
   while (!videoUrl) {
     await sleep(1000)
+    timeProcessing++
     const lipsyncStatus = await getLipSync(lipSyncId)
 
     videoUrl = lipsyncStatus.videoUrl
     console.log(lipsyncStatus, videoUrl)
+
+    if (lipsyncStatus.status === "FAILED") {
+      return Response.error(lipsyncStatus.errorMessage)
+      break
+    }
+
+    if (timeProcessing > 300) {
+      return Response.error("Timeout creating")
+      break
+    }
   }
 
   //   console.log("video made!", videoUrl)
