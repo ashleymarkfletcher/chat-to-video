@@ -46,19 +46,27 @@ export async function POST(request) {
   //     stream: false
   //   })
 
+  console.log("creating audio")
+
   const audioBase64 = await createAudioBase64FromText(text)
   console.log("audioBase64", audioBase64)
   //   console.log(audio)
 
+  console.log("audio blob to buffer")
+
   const audioBlob = new Blob([base64toBuffer(audioBase64)])
+
+  console.log("storing audio blob")
 
   const { url } = await put("test.mp3", audioBlob, {
     access: "public"
   })
   //synclabs
-  console.log(url)
+  console.log("audio file:", url)
 
   //   const string64 = `data:audio/mpeg;base64,${audioBase64}`
+
+  console.log("making lip sync:", url)
 
   const videoRespone = await makeLipSync(
     url,
