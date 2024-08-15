@@ -1,3 +1,5 @@
+export const maxDuration = 300 // This function can run for a maximum of 5 seconds
+
 import { base64toBuffer, sleep } from "../_lib/helpers"
 import {
   createAudioBase64FromText,
