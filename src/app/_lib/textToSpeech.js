@@ -1,3 +1,5 @@
+import * as path from "path"
+
 import { ElevenLabsClient } from "elevenlabs"
 import { createWriteStream } from "fs"
 import { streamToBase64 } from "./helpers"
@@ -37,7 +39,7 @@ export const createAudioBase64FromText = async (text) => {
         model_id: "eleven_turbo_v2_5",
         text
       })
-      const fileName = `${uuid()}.mp3`
+      const fileName = path.join("/tmp", `${uuid()}.mp3`)
       const fileStream = createWriteStream(fileName)
 
       const base64Audio = await streamToBase64(audio)
