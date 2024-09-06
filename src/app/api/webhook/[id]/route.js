@@ -1,24 +1,12 @@
 export const maxDuration = 300 // This function can run for a maximum of 5 seconds
 
-import { base64toBuffer, sleep } from "../../_lib/helpers"
-import {
-  createAudioBase64FromText,
-  createAudioFileFromText
-} from "../../_lib/textToSpeech"
-import { getLipSync, makeLipSync } from "../../_lib/lipSync"
-
-import { Blob } from "buffer"
-import { ElevenLabsClient } from "elevenlabs"
-import OpenAI from "openai"
-import { unstable_after as after } from "next/server"
-import { put } from "@vercel/blob"
-
-export async function POST(request) {
+export async function POST(request, params) {
   console.log("post request")
   //   const formData = await request.formData()
   //   const name = formData.get("name")
   //   const description = formData.get("description")
 
+  const conversationId = params.id
   const data = await request.json()
 
   const { result } = data

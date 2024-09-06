@@ -1,4 +1,4 @@
-export const makeLipSync = async (audio, video) => {
+export const makeLipSync = async (audio, video, webhookUrl) => {
   const options = {
     method: "POST",
     headers: {
@@ -15,7 +15,7 @@ export const makeLipSync = async (audio, video) => {
     synergize: true,
     pads: [0, 5, 0, 0],
     synergizerStrength: 1,
-    webhookUrl: "https://chat-to-video-gray.vercel.app/api/webhook"
+    webhookUrl
     // webhookUrl:
     //   "https://2437f42c4912621626be4abcd4449272.loophole.site/api/webhook"
   }
