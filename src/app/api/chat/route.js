@@ -79,43 +79,43 @@ const generateVideo = async (
   )
   console.log("videoRespone", videoRespone)
 
-  const lipSyncId = videoRespone.id
-  let videoUrl = null
+  // const lipSyncId = videoRespone.id
+  // let videoUrl = null
 
-  let timeProcessing = 0
+  // let timeProcessing = 0
 
-  while (!videoUrl) {
-    await sleep(1000)
-    timeProcessing++
-    const lipsyncStatus = await getLipSync(lipSyncId)
+  // while (!videoUrl) {
+  //   await sleep(1000)
+  //   timeProcessing++
+  //   const lipsyncStatus = await getLipSync(lipSyncId)
 
-    videoUrl = lipsyncStatus.videoUrl
-    console.log(lipsyncStatus, videoUrl)
+  //   videoUrl = lipsyncStatus.videoUrl
+  //   console.log(lipsyncStatus, videoUrl)
 
-    if (lipsyncStatus.status === "FAILED") {
-      throw lipsyncStatus.errorMessage
-      break
-    }
+  //   if (lipsyncStatus.status === "FAILED") {
+  //     throw lipsyncStatus.errorMessage
+  //     break
+  //   }
 
-    if (timeProcessing > 300) {
-      throw "Timeout creating"
-      break
-    }
-  }
+  //   if (timeProcessing > 300) {
+  //     throw "Timeout creating"
+  //     break
+  //   }
+  // }
 
-  console.log("video made!", videoUrl)
+  // console.log("video made!", videoUrl)
 
-  const resumeBotDataResponse = await fetch(process.env.BOTPRESS_WEBHOOK_URL, {
-    method: "POST",
-    headers: {
-      "x-bp-secret": process.env.BOTPRESS_WEBHOOK_SECRET,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({ conversationId, videoUrl })
-  })
-  // const b = await resumeBotDataResponse.json()
+  // const resumeBotDataResponse = await fetch(process.env.BOTPRESS_WEBHOOK_URL, {
+  //   method: "POST",
+  //   headers: {
+  //     "x-bp-secret": process.env.BOTPRESS_WEBHOOK_SECRET,
+  //     "Content-Type": "application/json"
+  //   },
+  //   body: JSON.stringify({ conversationId, videoUrl })
+  // })
+  // // const b = await resumeBotDataResponse.json()
 
-  console.log("b", resumeBotDataResponse)
+  // console.log("b", resumeBotDataResponse)
   return
 }
 
