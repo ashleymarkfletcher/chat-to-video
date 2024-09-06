@@ -10,6 +10,7 @@ import { getLipSync, makeLipSync } from "../../_lib/lipSync"
 import { Blob } from "buffer"
 import { ElevenLabsClient } from "elevenlabs"
 import OpenAI from "openai"
+import { unstable_after as after } from "next/server"
 import { put } from "@vercel/blob"
 
 const client = new OpenAI({
@@ -135,8 +136,9 @@ export async function POST(request) {
   console.log("data", data)
 
   // Go back to the bot straight away, we'll webhook back when video ready
-
-  generateVideo(conversationId, first, achievement, department)
+  after(() => {
+    generateVideo(conversationId, first, achievement, department)
+  })
 
   return Response.json({})
 
