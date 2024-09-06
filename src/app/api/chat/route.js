@@ -76,6 +76,8 @@ const generateVideo = async (
   const videoRespone = await makeLipSync(
     url,
     "https://lk8gussgku7l2lhf.public.blob.vercel-storage.com/dimiShort.mp4",
+    // "https://2437f42c4912621626be4abcd4449272.loophole.site/api/webhook/" +
+    //   conversationId
     "https://chat-to-video-gray.vercel.app/api/webhook/" + conversationId
   )
   console.log("videoRespone", videoRespone)
@@ -93,6 +95,7 @@ export async function POST(request) {
 
   const { conversationId, userId, botId, name, achievement, department } = data
   const { first, last } = name
+  console.log("conversationId", conversationId)
 
   // console.log(name, nodeId, userId, botId)
 

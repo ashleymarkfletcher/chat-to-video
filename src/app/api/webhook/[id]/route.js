@@ -1,13 +1,17 @@
 export const maxDuration = 300 // This function can run for a maximum of 5 seconds
 
-export async function POST(request, params) {
+export async function POST(request, { params }) {
   console.log("post request")
   //   const formData = await request.formData()
   //   const name = formData.get("name")
   //   const description = formData.get("description")
 
+  console.log("params", params)
+
   const conversationId = params.id
   const data = await request.json()
+
+  console.log("conversationId", conversationId)
 
   const { result } = data
   //   const { first, last } = name
