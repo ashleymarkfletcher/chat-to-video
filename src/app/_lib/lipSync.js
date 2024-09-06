@@ -14,8 +14,10 @@ export const makeLipSync = async (audio, video) => {
     model: "sync-1.7.1-beta", // check if 1.7.1 works here
     synergize: true,
     pads: [0, 5, 0, 0],
-    synergizerStrength: 1
-    // webhookUrl: "<string>"
+    synergizerStrength: 1,
+    webhookUrl: "https://chat-to-video-gray.vercel.app/api/webhook"
+    // webhookUrl:
+    //   "https://2437f42c4912621626be4abcd4449272.loophole.site/api/webhook"
   }
 
   options.body = JSON.stringify(body)
