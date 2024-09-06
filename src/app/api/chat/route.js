@@ -136,8 +136,8 @@ export async function POST(request) {
   console.log("data", data)
 
   // Go back to the bot straight away, we'll webhook back when video ready
-  after(() => {
-    generateVideo(conversationId, first, achievement, department)
+  after(async () => {
+    await generateVideo(conversationId, first, achievement, department)
   })
 
   return Response.json({})
