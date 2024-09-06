@@ -1,4 +1,5 @@
 export const maxDuration = 300 // This function can run for a maximum of 5 seconds
+export const dynamic = "force-dynamic"
 
 import { base64toBuffer, sleep } from "../../_lib/helpers"
 import {
@@ -93,12 +94,12 @@ const generateVideo = async (
     console.log(lipsyncStatus, videoUrl)
 
     if (lipsyncStatus.status === "FAILED") {
-      return Response.error(lipsyncStatus.errorMessage)
+      throw lipsyncStatus.errorMessage
       break
     }
 
     if (timeProcessing > 300) {
-      return Response.error("Timeout creating")
+      throw "Timeout creating"
       break
     }
   }
@@ -116,6 +117,7 @@ const generateVideo = async (
   // const b = await resumeBotDataResponse.json()
 
   console.log("b", resumeBotDataResponse)
+  return
 }
 
 export async function POST(request) {
